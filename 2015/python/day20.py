@@ -19,31 +19,20 @@ def product(factors):
     return res
 
 
-# target = 2900000
-primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59]
-queue = [(0, {})]
-seen = set()
-minimum_seen = 1e20
-while queue:
-    sigma_val, factors = heappop(queue)
+target = 29_000_000
+houses = [11] * 1_000_000
+for i in range(2, 1_000_000):
+    j = i
+    for _ in range(50):
+        if j >= 1_000_000:
+            break
+        houses[j] += i * 11
+        j += i
 
-    if product(factors) > minimum_seen:
-        continue
+    if i % 10_000 == 0:
+        print(i // 10_000)
 
-    if sigma_val >= target:
-        print(factors, sigma(factors), product(factors))
-        minimum_seen = min(minimum_seen, product(factors))
-        continue
-
-    for prime in primes:
-        new_factors = {k: v for k, v in factors.items()}
-        new_factors.setdefault(prime, 0)
-        new_factors[prime] += 1
-
-        new_sigma = sigma(new_factors)
-        prod = product(new_factors)
-        if (prod, new_sigma) in seen:
-            continue
-
-        seen.add((prod, new_sigma))
-        heappush(queue, (new_sigma, new_factors))
+for i, v in enumerate(houses):
+    if v >= target:
+        print(i)
+        break
