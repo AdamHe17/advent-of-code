@@ -31,30 +31,15 @@ new_target = 'e'
 reversed_replacements = {}
 for k, vs in replacements.items():
     for v in vs:
-        reversed_replacements.setdefault(v, set())
-        reversed_replacements[v].add(k)
-queue = deque([(start, 0)])
-seen = set()
+        reversed_replacements[v] = k
+
 total_steps = 0
-while queue:
-    curr, steps = queue.popleft()
+while start != new_target:
+    for k, v in reversed_replacements.items():
+        index = start.find(k)
+        while index > -1:
+            total_steps += 1
+            start = start[:index] + v + start[index + len(k):]
+            index = start.find(k)
 
-    total_steps += 1
-    if total_steps % 10000 == 0:
-        print(f'total_steps={total_steps}')
-        print(len(curr), steps)
-
-    if curr == new_target:
-        print(f'steps={steps}')
-        print(f'total_steps={total_steps}')
-        break
-
-    if curr in seen:
-        continue
-    seen.add(curr)
-
-    for source, targets in reversed_replacements.items():
-        for index in find_all(curr, source):
-            for target in targets:
-                queue.append(
-                    (curr[:index]+target+curr[index+len(source):], steps + 1))
+print(start, total_steps)
