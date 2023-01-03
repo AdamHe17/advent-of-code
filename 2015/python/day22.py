@@ -24,12 +24,9 @@ class Player:
         return f'hp={self.hp},atk={self.atk},mana={self.mana},armor={self.armor}'
 
 me = Player(50, 0, 500)
-# me = Player(10, 0, 250)
 with open('inputs/day22.in', 'r') as infile:
     boss = Player(*([int(infile.readline().split(': ')[1]) for _ in range(2)] + [0]))
 difficulty = 'hard'
-# boss.hp = 14
-# boss.atk = 8
 print(me, boss, difficulty)
 
 spells = [  # id, cost, hp, dmg, armor, mana, turns
@@ -74,13 +71,9 @@ def resolve_effects(me: Player, boss: Player, effects) -> None:
 
 min_mana = float('inf')
 queue = deque([(me, boss, [], True)])
-# iteration = 0
 visited = set()
 while queue:
     me, boss, active_effects, my_turn = queue.popleft()
-    # iteration += 1
-    # if iteration % 100_000 == 0:
-        # print(f'i={iteration}, min_mana={min_mana}, hps={me.hp, boss.hp}')
 
     state = (me.hp, boss.hp, frozenset([(spell_id, effect[-1]) for spell_id, effect in active_effects]))
     if state in visited:
