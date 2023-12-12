@@ -22,20 +22,25 @@ def consume(row, nums):
 
     curr = nums[0]
     res = 0
-    if row[0] == '#' or row[0] == '?':
-        i = 1
-        while i < len(row):
-            if i == curr and row[i] != '#':
-                res += consume(row[i+1:], nums[1:])
-                break
-            if row[i] == '.':
-                break
-            i += 1
+    if len(row) < curr + 1:
+        pass
+    else:
+        part = row[:curr + 1]
+        if '.' in part[:curr] or part[-1] == '#':
+            pass
+        else:
+            res += consume(row[curr+1:], nums[1:])
 
     if row[0] == '?':
         res += consume(row[1:], nums)
-
+    
     return res
 
 print(sum(consume(row+'.', tuple(nums)) for row, nums in ls1))
-print(sum(consume(row+'.', tuple(nums)) for row, nums in ls2))
+# print(sum(consume(row+'.', tuple(nums)) for row, nums in ls2))
+
+res = 0
+for row, nums in ls2:
+    res += consume(row+'.', tuple(nums))
+    consume.cache_clear()
+print(res)
