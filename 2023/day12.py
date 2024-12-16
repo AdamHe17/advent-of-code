@@ -37,10 +37,4 @@ def consume(row, nums):
     return res
 
 print(sum(consume(row+'.', tuple(nums)) for row, nums in ls1))
-# print(sum(consume(row+'.', tuple(nums)) for row, nums in ls2))
-
-res = 0
-for row, nums in ls2:
-    res += consume(row+'.', tuple(nums))
-    consume.cache_clear()
-print(res)
+print(sum(consume(row+'.', tuple(nums)) for row, nums in ls2))
