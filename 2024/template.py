@@ -1,4 +1,4 @@
-from collections import defaultdict
+from collections import defaultdict, deque
 from itertools import combinations
 
 
@@ -6,6 +6,8 @@ with open("day9.in", "r") as infile:
     lines = [line.strip() for line in infile.readlines()]
 
     grid = [[i for i in line] for line in lines]
+    height = len(grid)
+    width = len(grid[0])
 
 
 def _gcd_extended(a, b):
